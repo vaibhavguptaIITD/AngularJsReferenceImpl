@@ -1,0 +1,46 @@
+<!doctype html>
+<html ng-app="quotesPageApp">
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+  </head>
+  <body>
+    <div ng-controller="QuotesController" class="container">
+      <div class="page-header">
+          <h1>Quotes Page</h1>
+      </div>
+      <quotes></quotes>
+      <div class="row">
+          <div class="col-md-4">
+              <slider-filter type="range" price></slider-filter>
+          </div>
+      </div>
+    </div>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.5/angular.min.js"></script>
+      <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+      <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+      <script src="quotes.js"></script>
+  </body>
+
+  <script type="text/ng-template" id="/templates/quotes.html">
+    <ul>
+      <li ng-repeat="quote in quotes">
+        {{quote.planName}}, {{quote.price}}, {{quote.carrier}}
+      </li>      
+    </ul>
+  </script>
+
+  <script type="text/ng-template" id="/templates/slider.html">
+     <div class="sliderControl"></div>
+     <div ng-switch="type">
+      <div ng-switch-when="range">
+        {{interimValues[0]}} - {{interimValues[1]}}
+      </div>
+      <div ng-switch-default>
+        {{interimValue}}
+      </div>
+     </div>
+  </script>
+
+
+</html>
