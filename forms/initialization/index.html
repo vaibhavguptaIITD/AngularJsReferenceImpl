@@ -1,0 +1,51 @@
+<!doctype html>
+<html ng-app="initializationApp">
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+  <link rel="stylesheet" href="../../css/jquery.multiselect.css">
+</head>
+<body>
+  <div ng-controller="EmployeeFormController" class="container">
+    <!-- Prints employee json's current state-->
+    {{employee | json}}
+    <form class="form-horizontal" role="form" name="employeeForm">
+      <div class="form-group">
+        <label for="email" class="col-sm-2 control-label">Email</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="email" placeholder="Email" name="email" value="vaibhavgupta@hcentive.com" ng-model="employee.email" ng-initial>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="password" class="col-sm-2 control-label">Password</label>
+        <div class="col-sm-10">
+          <input type="password" class="form-control" id="password" placeholder="Password" name="password" value="Qwerty123" ng-model="employee.password" ng-initial>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="departments" class="col-sm-2 control-label">Departments</label>
+        <div class="col-sm-10">
+          <select class="form-control" id="departments" ng-initial ng-model="employee.departments" name="departments" value="private">
+              <option value="">Select one</option>
+              <option value="public">public</option>
+              <option value="private" selected="selected">private</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-default">Sign in</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+  <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+  <script src="../../scripts/jquery.maskedinput.min.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
