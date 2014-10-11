@@ -1,0 +1,69 @@
+<!doctype html>
+<html ng-app="formApp">
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+</head>
+<body>
+  <div ng-controller="EmployeeFormController" class="container">
+
+    {{employee | json}}
+    <form class="form-horizontal" role="form">
+      <div class="form-group">
+        <label for="email" class="col-sm-2 control-label">Email</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="email" placeholder="Email" name="email" value="vaibhavgupta@hcentive.com" ng-model="employee.email" ng-initial>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="password" class="col-sm-2 control-label">Password</label>
+        <div class="col-sm-10">
+          <input type="password" class="form-control" id="password" placeholder="Password" name="password" value="Qwerty123" ng-model="employee.password" ng-initial>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="dob" class="col-sm-2 control-label">DOB</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="dob" name="dob" placeholder="Date of Birth" ui-mask="dob" ng-model="employee.dob" ng-initial>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="zip" class="col-sm-2 control-label">Zip</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="zip" placeholder="Zip" ng-initial ui-mask="zip" ng-model="employee.zip" >
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="county" class="col-sm-2 control-label">County</label>
+        <div class="col-sm-10">
+          <select class="form-control" id="county" ng-initial ng-model="employee.county"></select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="state" class="col-sm-2 control-label">State</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="state" placeholder="State">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-default">Sign in</button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+  <script src="../jquery.maskedinput.min.js"></script>
+  <script src="../underscore-min.js"></script>
+  <script src="form.js"></script>
+</body>
+
+</html>

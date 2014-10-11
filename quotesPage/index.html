@@ -1,0 +1,53 @@
+<!doctype html>
+<html ng-app="quotesPageApp">
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+  </head>
+  <body>
+    <div ng-controller="QuotesController" class="container">
+    <div class="row">
+          <div class="col-md-4">
+              	<div ui-slider="{range:true}" min="{{filters.sliders[0].min}}" max="{{filters.sliders[0].max}}" ng-model="filterCriterias.price" ></div>
+          </div>
+          <div class="col-md-4">
+          		<div ng-repeat="carrier in filters.checkboxGroups[0].group">
+          			<label>
+          				<input type="checkbox" ng-model="filterCriterias.carrier[carrier]" value="{{carrier}}" ng-false-value="">
+          				{{carrier}}
+          			</label>
+          		</div>
+          </div>
+          {{filterCriterias.carrier}}
+      </div>
+      <div class="page-header">
+          <h1>Quotes Page</h1>
+      </div>
+      <quotes></quotes>
+      
+    </div>
+
+
+    <div ng-controller="EmployeeController">
+    	
+    		
+    </div>
+      <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+      <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+      <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+      <script src="../underscore-min.js"></script>
+      <script src="../slider.js"></script>
+      <script src="quotes.js"></script>
+  </body>
+
+  <script type="text/ng-template" id="/templates/quotes.html">
+    <ul>
+      <li ng-repeat="quote in filteredQuotes = (quotes | filter: quotesFilter)">
+        {{quote.planName}}, {{quote.price}}, {{quote.carrier}}
+      </li>      
+    </ul>
+    <span ng-hide="filteredQuotes.length">No results</span>
+  </script>
+
+
+</html>
