@@ -1,0 +1,64 @@
+<!doctype html>
+<html ng-app="formApp">
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+  <link rel="stylesheet" href="../../css/jquery.multiselect.css">
+</head>
+<body>
+  <div ng-controller="EmployeeFormController" class="container">
+    <!-- Prints employee json's current state-->
+    {{employee | json}}
+    <form class="form-horizontal" role="form" name="employeeForm">
+      <div class="form-group">
+        <label for="email" class="col-sm-2 control-label">Email</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="email" placeholder="Email" name="email" value="vaibhavgupta@hcentive.com" ng-model="employee.email" ng-initial ng-pattern="pattern.email" ng-required="true">
+          <span ng-show="employeeForm.email.$error.pattern">This is not valid email!</span>
+          <span ng-show="employeeForm.email.$error.required">Email is required field</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="password" class="col-sm-2 control-label">Password</label>
+        <div class="col-sm-10">
+          <input type="password" class="form-control" id="password" placeholder="Password" name="password" value="Qwerty123" ng-model="employee.password" ng-initial ng-required="true">
+          <span ng-show="employeeForm.password.$error.required">Password is required</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password" class="col-sm-2 control-label">Confirm Password</label>
+        <div class="col-sm-10">
+          <input type="password" class="form-control" id="password" placeholder="Password" name="confirmPassword" value="Qwerty123" ng-model="employee.confirmPassword" ng-initial hc-equal="employee.password" >
+          <span ng-show="employeeForm.confirmPassword.$error.hcEqual">Confirm Password should match password</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="dob" class="col-sm-2 control-label">DOB</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="dob" name="dob" placeholder="Date of Birth" ui-mask="dob" ng-model="employee.dob" ng-initial value="11/11/1989" hc-mmddyyyy ng-required="true">
+          <span ng-show="employeeForm.dob.$error.hcMmddyyyy">Invalid dob format</span>
+          <span ng-show="employeeForm.dob.$error.required">DOB is required</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-default">Sign in</button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+  <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+  <script src="../../scripts/jquery.maskedinput.min.js"></script>
+  <script src="../initialization/app.js"></script>
+  <script src="../masking/app.js"></script>
+  <script src="validation.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>

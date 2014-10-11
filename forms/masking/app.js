@@ -1,5 +1,5 @@
-angular.module('employeeApp', ["initializationApp"])
-.controller("EmployeeFormController",[function($scope){
+angular.module('maskingApp', ["initializationApp"])
+.controller("MaskingController",[function($scope){
 }])
 //Directive for masking inputs in form.
 .directive('uiMask', [

@@ -10,3 +10,4 @@ This is a reference implementation using angular js. It will cover
 4. Placeholders
 5. Zip/County/State widget
 6. jQuery widgets passthrough
+7. Framework for quotes 
