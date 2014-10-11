@@ -1,31 +1,6 @@
-angular.module('formApp', ["hcValidation","ui.jq"])
-.controller("EmployeeFormController",['$scope','demographicService',function($scope, demographicService){
-	$scope.pattern = {
-    email : /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  };
-  $scope.employee = {
-    county : "county1",
-    counties : ["county1" ,"county2"]
-  };
+angular.module('employeeApp', [])
+.controller("EmployeeFormController",[function($scope){
 }])
-.factory("demographicService",function(){
-	var data = {},
-	getZip = function(zip){
-		return data[zip];
-	},
-	seedzip = 1000;
-	for(var i = 0; i < 1000; i++){
-		var zip = seedzip + i;
-		data[zip] = {
-			county: [zip + "c1", zip + "c2"],
-			state : zip+"s"
-		};
-	}
-	return {
-		getZip: getZip
-	}
-
-})
 .directive('ngInitial', function($parse) {
     return {
         restrict: "A",
@@ -39,6 +14,7 @@ angular.module('formApp', ["hcValidation","ui.jq"])
         }
     }
 })
+//Directive for masking inputs in form.
 .directive('uiMask', [
   function () {
     return {
@@ -47,6 +23,8 @@ angular.module('formApp', ["hcValidation","ui.jq"])
       	type : "@uiMask"
       },
       controller: function($scope){
+        //Masking types are defined here. This will be shared across the application. To create a new masking,
+        //add it as a property of scope here. Since this is isolated scope, it will not mess with parent scope.
       	$scope.dob = "99/99/9999";
       	$scope.zip = "99999";
       },
@@ -60,7 +38,8 @@ angular.module('formApp', ["hcValidation","ui.jq"])
           var isValid = value.length && value.indexOf("_") == -1;
           return isValid ? value : undefined;
         });
-        /* When keyup, update the view value
+        /* When keyup, update the view value. I am not 100% percent convinced on this.
+        Asked a question on (stack overflow)[http://stackoverflow.com/questions/26310408/integrate-jquery-masked-input-as-angularjs-directive]
          */
         element.bind('keyup', function () {
           $scope.$apply(function () {

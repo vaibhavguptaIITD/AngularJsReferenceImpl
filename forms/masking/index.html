@@ -1,0 +1,29 @@
+<!doctype html>
+<html ng-app="employeeApp">
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+  <link rel="stylesheet" href="../../css/jquery.multiselect.css">
+</head>
+<body>
+  <div ng-controller="EmployeeFormController" class="container">
+    <!-- Prints employee json's current state-->
+    {{employee | json}}
+    <form class="form-horizontal" role="form" name="employeeForm">
+      <div class="form-group">
+        <label for="dob" class="col-sm-2 control-label">DOB</label>
+        <div class="col-sm-10">
+          <!-- ui-mask is used to mask an input-->
+          <input type="text" class="form-control" id="dob" name="dob" placeholder="Date of Birth" ui-mask="dob" ng-model="employee.dob" ng-initial value="11/11/1989">
+        </div>
+      </div>
+    </form>
+  </div>
+  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+  <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+  <script src="../../scripts/jquery.maskedinput.min.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
