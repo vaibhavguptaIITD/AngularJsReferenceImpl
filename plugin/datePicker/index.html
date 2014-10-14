@@ -1,0 +1,37 @@
+<!doctype html>
+<html ng-app="datePickerApp">
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+  <link rel="stylesheet" href="../../css/jquery.multiselect.css">
+</head>
+<body>
+  <div ng-controller="DatePickerController" class="container">
+    DOB: {{dob}}
+    DOB1: {{dob1}}
+    <form class="form-inline" role="form" name="datePickerForm">
+      <div class="form-group">
+        <label for="dob">Date of Birth</label>
+        <hc-date name="dob" ng-initial ng-model="dob" format="MM/DD/YYYY" required></hc-date>
+        <span ng-show="datePickerForm.dob.$error.required">This is not valid dob!</span>
+      </div>
+    </form>
+  </div>
+  <script type="text/ng-template" id="/templates/dob.html">
+  <div>
+      <input type="text" class="month" value="{{dateCollection[0]}}">
+      <input type="text" class="day" value="{{dateCollection[1]}}">
+      <input type="text" class="year" value="{{dateCollection[2]}}">
+      <input type="text" name="{{name}}" class="date" value="{{date}}">
+  </div>
+  </script>
+  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.js"></script>
+  <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+  <script src="../../scripts/jquery.maskedinput.min.js"></script>
+  <script src="../../scripts/moment.min.js"></script>
+  <script src="../../forms/initialization/app.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
