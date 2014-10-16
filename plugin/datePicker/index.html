@@ -12,18 +12,44 @@
     <form class="form-inline" role="form" name="datePickerForm">
       <div class="form-group">
         <label for="dob">Date of Birth</label>
-        <hc-date name="dob" ng-initial ng-model="dob" format="MM/DD/YYYY" required></hc-date>
+        <hc-date name="dob" ng-initial ng-model="dob" format="MM/DD/YYYY" required value="05/05/2007"></hc-date>
         <span ng-show="datePickerForm.dob.$error.required">This is not valid dob!</span>
       </div>
     </form>
   </div>
-  <script type="text/ng-template" id="/templates/dob.html">
+  <script type="text/ng-template" id="/templates/date.html">
   <div>
-      <input type="text" class="month" value="{{dateCollection[0]}}">
-      <input type="text" class="day" value="{{dateCollection[1]}}">
-      <input type="text" class="year" value="{{dateCollection[2]}}">
-      <input type="text" name="{{name}}" class="date" value="{{date}}">
+  <div class="col-md-4 col-sm-4 gutter0">
+    <label for="{{id}}_month" class="sr-only">Month</label>
+    <select class="form-control" id="{{id}}_month" ng-model="dateCollection.month">
+      <option value="">MM</option>
+      <option value="01">JAN</option>
+      <option value="02">FEB</option>
+      <option value="03">MAR</option>
+      <option value="04">APR</option>
+      <option value="05">MAY</option>
+      <option value="06">JUN</option>
+      <option value="07">JUL</option>
+      <option value="08">AUG</option>
+      <option value="09">SEP</option>
+      <option value="10">OCT</option>
+      <option value="11">NOV</option>
+      <option value="12">DEC</option>
+    </select>
   </div>
+  <div class="col-md-4 col-sm-4 gutterL10 gutterR0">
+    <label for="{{id}}_day" class="sr-only">Day</label>
+    <select class="form-control" id="{{id}}_day" ng-model="dateCollection.day" ng-options = "n for n in days">
+      <option value="">DD</option>
+    </select>
+  </div>
+  <div class="col-md-4 col-sm-4 gutterL10 gutterR0">
+    <label for="{{id}}_year" class="sr-only">Year</label>
+    <select class="form-control" id="{{id}}_year" ng-model="dateCollection.year" ng-options = "n for n in years">
+      <option value="">YYYY</option>
+    </select>
+  </div>
+</div>
   </script>
   <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.js"></script>

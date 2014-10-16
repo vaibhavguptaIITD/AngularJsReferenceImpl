@@ -1,0 +1,55 @@
+<!doctype html>
+<html ng-app="zipCountyApp">
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container" ng-controller="ZipCountyController">
+    <form class="form-inline" role="form" name="zipCountyWidget">
+      {{ employee | json }}
+      {{ employer | json }}
+      <div class="form-group">
+        <label for="zip">Zip</label>
+        <input type="text" class="form-control" id="zip" ng-model="employee.zip" ng-initial="true" value="80001">
+      </div>
+      <div class="form-group">
+        <label for="county">County</label>
+
+        <select id="county" ng-model="employee.county" hc-zip="employee.zip" ng-options="county for county in employee_county.countyList" ng-initial="true" value="JEFFERSON">
+          <option value="">Select County</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="state">State</label>
+         <input type="text" class="form-control" id="state" ng-model="employee.state" ng-initial="true" value="CO" hc-county="employee.county">
+
+      </div>
+
+
+      <div class="form-group">
+        <label for="zip">Zip</label>
+        <input type="text" class="form-control" id="zip" ng-model="employer.zip" ng-initial="true" value="80001" hc-zipControlGroup="group2">
+      </div>
+      <div class="form-group">
+        <label for="county">County</label>
+        <select id="county" ng-model="employer.county" hc-zip="employer.zip" ng-options="county for county in employer_county.countyList" ng-initial="true" value="JEFFERSON" zipControlGroup="group2">
+          <option value="">Select County</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="state">State</label>
+         <input type="text" class="form-control" id="state" ng-model="employer.state" ng-initial="true" value="CO" hc-county="employer.county" zipControlGroup="group2">
+
+      </div>
+
+
+
+    </form>
+  </div>
+  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular.js"></script>
+  <script src="../../forms/initialization/app.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>

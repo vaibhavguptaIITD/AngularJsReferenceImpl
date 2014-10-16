@@ -3,64 +3,50 @@ angular.module('datePickerApp', ["initializationApp"])
 }])
 .directive('hcDate', function() {
     return {
-        restrict: "EA",
-        templateUrl: "/templates/dob.html",
-        require: "?ngModel",
+        restrict: "E",
+        templateUrl: "/templates/date.html",
+        require: "ngModel",
         replace: "true",
         scope: {
             name : "@",
-            format: "@"
+            id: "@"
         },
-        priority: -1,
         controller : function($scope){
-            $scope.dateCollection = [];
-            function updateValueInScope(index, value){
-                $scope.$apply(function(){
-                    $scope.dateCollection[index] = value;    
-                });
-            }
-            $scope.updateMonthInScope = function(month){
-                updateValueInScope(0, month);
-            };
-            $scope.updateYearInScope = function(year){
-                 updateValueInScope(2, year);
-            };
-            $scope.updateDayInScope = function(day){
-                updateValueInScope(1, day);
-            };
-
+            $scope.dateCollection = {};
             //If any of month, day, year changes change the hidden date field
             $scope.$watchCollection('dateCollection', function(newValue){
-                if(newValue.length == 3){
-                 var newDate = moment(
-                         {
-                             month: newValue[0],
-                             day: newValue[1], 
-                             year: newValue[2]
-                         });
-                     if(newDate.isValid()){
-                        $scope.date=  newDate.format($scope.format);
-                     }
-                     else {
-                         $scope.date = undefined;
-                     }
+                if(newValue.month && newValue.day && newValue.year){
+                    $scope.date = newValue.month + "/" + newValue.day + "/" + newValue.year;
                 }
             });
+
+            function getDays(){
+                var days =[];
+                for(var i = 1; i < 32; i++){
+                    if(i < 10){
+                        days.push("0"+i);
+                    }
+                    else{
+                        days.push(i);
+                    }
+                }
+                return days;
+            }
+
+            function getYears(){
+                var years = [],
+                currentYear = new Date().getFullYear();
+                for(var i = 0; i < 100 ; i++){
+                    years.push(currentYear - i + "");
+                }
+                return years;
+            }
+           
+            $scope.days = getDays();
+            $scope.years = getYears();
+
         },
         link : function(scope, element, attrs, ngModelCtrl){
-            var $month = element.find(".month"),
-            $day = element.find(".day"),
-            $year = element.find(".year");
-            $month.change(function(){
-                scope.updateMonthInScope($month.val());
-            });
-            $year.change(function(){
-                scope.updateYearInScope($year.val());
-            });
-            $day.change(function(){
-                scope.updateDayInScope($day.val());
-            });
-            //If hidden date changes, change the main model
             scope.$watch('date', function(newDate){
                 ngModelCtrl.$setViewValue(newDate);
             });
@@ -68,18 +54,35 @@ angular.module('datePickerApp', ["initializationApp"])
             ngModelCtrl.$render = function(){
                 var viewValue = ngModelCtrl.$viewValue;
                 if(viewValue){
-                    var viewDate = moment(viewValue, scope.format);
-                    if(viewDate.isValid()){
-                        var month = viewDate.month(),
-                        year = viewDate.year(),
-                        day = viewDate.date();
-                        scope.dateCollection[0] = month;
-                        scope.dateCollection[1] = day;
-                        scope.dateCollection[2] = year;
+                    var viewDateStr = viewValue.split("/");
+                    if(viewDateStr.length == 3){
+                        var month = viewDateStr[0],
+                        year = viewDateStr[2],
+                        day = viewDateStr[1];
+                        scope.dateCollection.month = month;
+                        scope.dateCollection.day = day;
+                        scope.dateCollection.year = year;
                     }
                 }
             }
         }
     }
+})
+.filter("range", function(){
+     return function(val, range) {
+            var rangeArray = range.split(","),
+            rangeMin, rangeMax;
+            if(rangeArray.length == 2){
+                rangeMin = parseInt(rangeArray[0]);
+                rangeMax = parseInt(rangeArray[1]);
+            }
+            else{
+                rangeMin = 0;
+                rangeMax = parseInt(rangeArray[0]);
+            }
+            for (var i=rangeMin; i<rangeMax; i++)
+              val.push(i);
+            return val;
+          };
 });
 
