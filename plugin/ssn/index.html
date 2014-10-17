@@ -1,0 +1,47 @@
+<!doctype html>
+<html ng-app="ssnApp">
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+</head>
+<body>
+  <div ng-controller="SSNController" class="container">
+    <form class="form-inline" role="form" name="ssnControlForm">
+
+      {{employee | json }}
+      <div class="form-group">
+        <fieldset>
+          <legend class="customLegend">Social Security Number (SSN)</legend>
+          <hc-ssn name="employee.ssn" ng-model="employee.ssn" ng-required="true" value="123-23-1234" hc-initial="true" id="employeeSSN"/>
+
+        </fieldset>
+        <span ng-show="ssnControlForm['employee.ssn'].$error.required">SSN is required</span>
+    </form>
+  </div>
+  <script type="text/ng-template" id="/templates/ssn.html">
+  <div>
+
+    <div class="col-md-4 col-sm-4 gutter0">
+       <label for="{{id}}_1" class="sr-only">SSN1</label>
+       <input type="password" class="form-control" id="{{id}}_1" name="{{name}}_1" ng-model="ssnCollection[0]" maxlength="3" hc-numeric="true" ng-minlength="3" ng-maxlength="3">
+    </div>
+    <div class="col-md-3 col-sm-3 gutterL10 gutterR0">
+       <label for="{{id}}_2" class="sr-only">SSN2</label>
+       <input type="password" class="form-control" id="{{id}}_2" hc-focus-on="ssnCollection[0].length == 3" name="{{name}}_2" ng-model="ssnCollection[1]" maxlength="2" hc-numeric="true" ng-minlength="2" ng-maxlength="2">
+    </div>
+    <div class="col-md-5 col-sm-5 gutterL10 gutterR0">
+       <label for="{{id}}_3" class="sr-only">SSN3</label>
+       <input type="text" class="form-control" hc-focus-on="ssnCollection[1].length == 2" id="{{id}}_3" name="{{name}}_3" maxlength="4" ng-model="ssnCollection[2]" hc-numeric="true" ng-minlength="4" ng-maxlength="4">
+       {{ssnCollection | json}}
+    </div>
+    <input type="hidden" name="{{name}}" ng-model="ssn">
+  </div>
+  </script>
+  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+  <script src="../../scripts/jquery.numeric.min.js"></script>
+  <script src="../../forms/initialization/app.js"></script>
+
+  <script src="app.js"></script>
+</body>
+
+</html>

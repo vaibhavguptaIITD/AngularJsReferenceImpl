@@ -2,32 +2,46 @@ angular.module('zipCountyApp', ["initializationApp"])
 .controller("ZipCountyController", function(){
 
 })
-.directive("hcZip", ["demographicService", function(demographicService){
+.directive("county", ["demographicService", function(demographicService){
 	return {
+		restrict: "E",
+		template: 
+		 '	<select id="county">'+
+          		'<option value="">Select County</option>'+
+        	'</select>'
+		,
 		require : "ngModel",
-		link: function(scope, element, attrs, ngModelController){
-			var zipcontrolgroup = attrs.ngModel.replace(".","_");
-			scope.$watch(attrs["hcZip"], function(zip){
-				var countyList = null,
-				county = null,
-				demographicData = null;
-				if(zip){
-					demographicData = demographicService.getDemographicData(zip);
-					countyList = demographicService.getCountiesForZipInDemographicData(zip, demographicData);
-					if(countyList && countyList.length == 1){
-						county = countyList[0];
+		replace: "true",
+		compile: function compile(tElement, tAttrs, transclude) {
+	      return {
+	        pre: function preLink(scope, iElement, iAttrs, controller) {
+	        	iAttrs.ngOptions = "county for county in "+iAttrs.ngModel.replace(".","_")+".countyList";
+	        },
+	        post: function(scope, element, attrs, ngModelController){
+				var zipcontrolgroup = attrs.ngModel.replace(".","_");
+				scope.$watch(attrs["hcZip"], function(zip){
+					var countyList = null,
+					county = null,
+					demographicData = null;
+					if(zip){
+						demographicData = demographicService.getDemographicData(zip);
+						countyList = demographicService.getCountiesForZipInDemographicData(zip, demographicData);
+						if(countyList && countyList.length == 1){
+							county = countyList[0];
+						}
 					}
-				}
-				scope[zipcontrolgroup] = {
-					countyList : countyList,
-					demographicData : demographicData
-				};
-				ngModelController.$setViewValue(county);
-				ngModelController.$render(function(){
-					element.val(county);
-				});	
-			});
-		}
+					scope[zipcontrolgroup] = {
+						countyList : countyList,
+						demographicData : demographicData
+					};
+					ngModelController.$setViewValue(county);
+					ngModelController.$render(function(){
+						element.val(county);
+					});	
+				});
+			}
+	      }
+	    }
 	}
 }])
 .directive("hcCounty", ["demographicService",function(demographicService){
