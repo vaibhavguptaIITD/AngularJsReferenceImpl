@@ -1,0 +1,40 @@
+<!doctype html>
+<html ng-app="zipCountyApp">
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container" ng-controller="ZipCountyController">
+    <form class="form-inline" role="form" name="zipCountyWidget">
+      {{ employee | json }}
+      {{ employer | json }}
+      <zip-widget ng-model="employee.address" name="employee.address" zip="80002" county="JEFFERSON" state="CO"></zip-widget>
+      <zip-widget ng-model="employer.address" name="employer.address" zip="80002" county="JEFFERSON" state="CO"></zip-widget>
+    </form>
+  </div>
+  <script type="text/ng-template" id="/templates/zipWidget.html">
+  <div class="form-group">
+      <label for="zip">Zip</label>
+      <input type="text" class="form-control" id="zip" ng-model="zip" ng-required="true">
+      <span ng-show="isZipInvalid()">Please enter valid zip</span>
+  </div>
+  <div class="form-group">
+    <label for="county">County</label>
+      <select class="form-control" id="county" ng-model="county" ng-options = "o for o in countyList" ng-required="true">
+        <option value="">Select County</option>
+      </select>
+  </div>
+  <div class="form-group">
+    <label for="state">State</label>
+     <input type="text" class="form-control" id="state" ng-model="state" ng-required="true">
+  </div>
+  </script>
+
+  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.js"></script>
+  <script src="../../forms/initialization/app.js"></script>
+  <script src="app.js"></script>
+  <script src="../zipCountyState/service.js"></script>
+</body>
+
+</html>

@@ -6,16 +6,17 @@ angular.module('zipCountyApp', ["initializationApp"])
 	return {
 		restrict: "E",
 		template: 
-		 '	<select id="county">'+
+		 '	<select id="county" class="_countySelect">'+
           		'<option value="">Select County</option>'+
-        	'</select>'
+        	'</select>'+
+        	'<input type="hidden" class="_county">'
 		,
 		require : "ngModel",
-		replace: "true",
 		compile: function compile(tElement, tAttrs, transclude) {
 	      return {
 	        pre: function preLink(scope, iElement, iAttrs, controller) {
-	        	iAttrs.ngOptions = "county for county in "+iAttrs.ngModel.replace(".","_")+".countyList";
+	        	iElement.find("._countySelect").attr("ng-model",iAttrs.ngModel).attr("ng-options","county.name as county.value for county in "+iAttrs.ngModel.replace(".","_")+".countyList")
+	        	iElement.find("._county").attr("ng-bind",iAttrs.ngModel).attr("name", iAttrs.name);
 	        },
 	        post: function(scope, element, attrs, ngModelController){
 				var zipcontrolgroup = attrs.ngModel.replace(".","_");
@@ -27,7 +28,7 @@ angular.module('zipCountyApp', ["initializationApp"])
 						demographicData = demographicService.getDemographicData(zip);
 						countyList = demographicService.getCountiesForZipInDemographicData(zip, demographicData);
 						if(countyList && countyList.length == 1){
-							county = countyList[0];
+							county = countyList[0].value;
 						}
 					}
 					scope[zipcontrolgroup] = {
@@ -36,7 +37,7 @@ angular.module('zipCountyApp', ["initializationApp"])
 					};
 					ngModelController.$setViewValue(county);
 					ngModelController.$render(function(){
-						element.val(county);
+						element.find("._countySelect").val(county);
 					});	
 				});
 			}
@@ -68,53 +69,3 @@ angular.module('zipCountyApp', ["initializationApp"])
 		}
 	}
 }])
-.factory("demographicService", function(){
-	var groupDemographicData = {},
-	zipCountyState = 
-	{	
-		"80002":
-		[
-			{"id":47340,"zipCode":"80002","county":"ADAMS","stateCode":"CO","city":"ARVADA","state":null},
-			{"id":47341,"zipCode":"80002","county":"JEFFERSON","stateCode":"CO","city":"ARVADA","state":null}
-		],
-		"80001":
-		[{"id":47339,"zipCode":"80001","county":"JEFFERSON","stateCode":"CO","city":"ARVADA","state":null}]
-	},
-	getDemographicData = function(zip){
-		var demographicData = zipCountyState[zip];
-		return demographicData;
-	},
-	getCountiesForZipInDemographicData = function(zip, demographicData){
-		var counties = null;
-		if(demographicData && demographicData.length){
-			counties = demographicData.map(function(data){
-			return data.county;
-			});
-		}
-		return counties;
-	},
-	getStateForCountyInDemographicData = function(county, demographicData){
-		var state;
-		for(var i = 0; i < demographicData.length; i++){
-			var data = demographicData[i];
-			if(county == data.county){
-				state = data.stateCode;
-				break;
-			}
-		}
-		return state;
-	},
-	setDemographicDataForGroup = function(demographicData, group){
-		groupDemographicData[group] = demographicData;
-	},
-	getDemographicDataForGroup = function(group){
-		return groupDemographicData[group];
-	};
-	return {
-		getDemographicData : getDemographicData,
-		getCountiesForZipInDemographicData : getCountiesForZipInDemographicData,
-		getStateForCountyInDemographicData : getStateForCountyInDemographicData,
-		setDemographicDataForGroup : setDemographicDataForGroup,
-		getDemographicDataForGroup : getDemographicDataForGroup
-	}
-});

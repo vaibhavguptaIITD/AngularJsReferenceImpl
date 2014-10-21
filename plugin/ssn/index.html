@@ -7,11 +7,11 @@
   <div ng-controller="SSNController" class="container">
     <form class="form-inline" role="form" name="ssnControlForm">
 
-      {{employee | json }}
+      {{ ssnControlForm['employee.ssn'] | json }}
       <div class="form-group">
         <fieldset>
           <legend class="customLegend">Social Security Number (SSN)</legend>
-          <hc-ssn name="employee.ssn" ng-model="employee.ssn" ng-required="true" value="123-23-1234" hc-initial="true" id="employeeSSN"/>
+          <hc-ssn name="employee.ssn" ng-model="employee.ssn" ng-required="true" value="123-23-1234" ng-initial="true" id="employeeSSN"/>
 
         </fieldset>
         <span ng-show="ssnControlForm['employee.ssn'].$error.required">SSN is required</span>
@@ -19,7 +19,6 @@
   </div>
   <script type="text/ng-template" id="/templates/ssn.html">
   <div>
-
     <div class="col-md-4 col-sm-4 gutter0">
        <label for="{{id}}_1" class="sr-only">SSN1</label>
        <input type="password" class="form-control" id="{{id}}_1" name="{{name}}_1" ng-model="ssnCollection[0]" maxlength="3" hc-numeric="true" ng-minlength="3" ng-maxlength="3">
@@ -37,7 +36,7 @@
   </div>
   </script>
   <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.js"></script>
   <script src="../../scripts/jquery.numeric.min.js"></script>
   <script src="../../forms/initialization/app.js"></script>
 

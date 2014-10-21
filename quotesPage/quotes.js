@@ -1,7 +1,10 @@
-angular.module('quotesPageApp', ['ui.slider'])
+angular.module('quotesPageApp', ['ui.slider','checklist-model'])
 .controller("QuotesController",['$scope','quotesService',function($scope, quotesService){
 	$scope.quotes = quotesService.getQuotes();
 	$scope.filters = quotesService.getFilters();
+	$scope.priceFilter = function(quote){
+		
+	}
 	$scope.filterCriterias = {
 		price : [$scope.filters.sliders[0].min,$scope.filters.sliders[0].max],
 		carrier:{}
@@ -12,10 +15,11 @@ angular.module('quotesPageApp', ['ui.slider'])
 		var carrierCriteria = $scope.filterCriterias.carrier;
 		if(priceFilterCriteria[0] > price || price > priceFilterCriteria[1])
 			return false;
-		if(! _.isEmpty(carrierCriteria) && ! carrierCriteria[quote.carrier])
+		if(! _.isEmpty(carrierCriteria) && $.inArray(quote.carrier, carrierCriteria) == -1)
 			return false;
 		return true;
 	}
+
 }])
 .factory("quotesService",function(){
 	var data = 
@@ -44,7 +48,7 @@ angular.module('quotesPageApp', ['ui.slider'])
 		return data.filters;
 	}
 
-	for(var i = 0; i < 1; i++){
+	for(var i = 0; i < 100; i++){
 		data.quotes.push(
 		{
 				planId : _.random(0, 1000),
@@ -64,4 +68,28 @@ angular.module('quotesPageApp', ['ui.slider'])
       templateUrl: "/templates/quotes.html",
       restrict: 'E'
     };
+}).
+directive("hcSlider", function(){
+	return {
+		restrict: "AE",
+		link : function(scope, element, attrs, ngModelCtrl){
+			scope.sliderOptions = {
+				"stop" : updateModel,
+				"range" : true
+			}
+			function updateModel(){
+				ngModelCtrl.$setViewValue(scope.slider);
+                scope.$apply();
+			}
+			ngModelCtrl.$render(function(){
+				scope.slider = ngModelCtrl.$viewValue;
+			});
+		},
+		templateUrl : "/templates/filterSlider.html",
+		require : "ngModel",
+		scope : {
+			max : "@",
+			min : "@"
+		}
+	}
 });

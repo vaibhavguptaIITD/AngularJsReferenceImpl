@@ -15,7 +15,7 @@
       </div>
       <div class="form-group">
         <label for="county">County</label>
-        <county id="county" ng-model="employee.county" hc-zip="employee.zip"></county>
+        <county id="county" ng-model="employee.county" hc-zip="employee.zip" name="employee.county" ng-initial="true"></county>
       </div>
       <div class="form-group">
         <label for="state">State</label>
@@ -40,6 +40,7 @@
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular.js"></script>
   <script src="../../forms/initialization/app.js"></script>
   <script src="app.js"></script>
+  <script src="service.js"></script>
 </body>
 
 </html>
